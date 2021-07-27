@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 """
 Gist에서 활용하기 위해 단일 파일로 만든 BOJ 모듈.
 표준 라이브러리 이외의 어떤 것도 활용하지 않음.
@@ -67,7 +68,7 @@ def get(args: NamedTuple) -> None:
             copyfile(template_path, dest_path)
         else:
             print(f"틀({template_path})이 없습니다. 빈 파일을 생성합니다.")
-            dest_path.open('w').close()
+            dest_path.open('w', encoding="UTF-8").close()
     print("다운로드 완료")
 
 

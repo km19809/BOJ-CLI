@@ -7,12 +7,12 @@ from colors import RESET, RED, GREEN, YELLOW,CYAN_BG, MAGENTA_BG
 
 def handle_argument(args: NamedTuple) -> None:
     """
-    args를 분해해 run에 전달하는 단순한 함수.
+    args를 분해해 check에 전달하는 단순한 함수.
     """
-    run(str(args.problem), args.verbose)
+    check(str(args.problem), args.verbose)
 
 
-def run(problem: str, verbose: bool):
+def check(problem: str, verbose: bool):
     """
     problem번 폴더의 output*.txt와 그에 대응하는 result*.txt를 이용해 예제를 채점.\n
     verbose가 True이면 채점 중에 각 파일의 채점 결과를 표시함.
@@ -42,22 +42,22 @@ def run(problem: str, verbose: bool):
                             print(f"{GREEN}✓{RESET} {example_path}")
         else:
             wrong.append(
-                (str(example_path), f"채점 불가: {result_name}이 존재하지 않음."))
+                (str(example_path), f"결과 파일({result_name})이 없습니다."))
             if verbose:
                 print(f"{RED}✗{RESET} {example_path}")
     if total == 0:
-        print(f"{problem_path}번 문제: {RED}예제 출력이 없습니다!{RESET}",  file=stderr)
+        print(f"{problem_path}번 문제: {RED}결과와 비교할 예제 출력이 없습니다!{RESET}",  file=stderr)
         return
     correct_count = total-len(wrong)
     correct_rate = correct_count/total
     decoration = GREEN if correct_rate > 0.66 else (
         YELLOW if correct_rate > 0.33 else RED)
     print(
-        f"정답률: {correct_count}/{total} {decoration}{correct_rate*100:.1f}{RESET}%\n")
-    print("틀린 항목:")
+        f"{YELLOW}정답률{RESET}: {correct_count}/{total} {decoration}{correct_rate*100:.1f}{RESET}%")
     if len(wrong) > 0:
+        print(f"{YELLOW}오답{RESET}:")
         for w in wrong:
-            print(*w)
+            print(f"{w[0]} > {w[1]}")
     else:
         print(
-            f"{RED}~{YELLOW}*{GREEN}~{RESET} 틀린 예제가 없어요! {GREEN}~{YELLOW}*{RED}~{RESET}")
+            f"{RED}~{YELLOW}*{GREEN}~{RESET} 예제를 모두 맞췄어요! {GREEN}~{YELLOW}*{RED}~{RESET}")
