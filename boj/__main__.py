@@ -5,7 +5,7 @@ import check
 
 parser = argparse.ArgumentParser(
     prog="boj",  description="백준 온라인 저지 비공식 보조도구\n예제를 다운로드하고, 작성한 코드를 실행 및 채점합니다.")
-subparsers = parser.add_subparsers(help='하위 명령어')
+subparsers = parser.add_subparsers(help='하위 명령어', metavar='{get,run,check}',  required=True)
 
 parser_get = subparsers.add_parser("get", help="예제 입력과 출력을 다운로드합니다.")
 parser_get.add_argument("problem", type=int, help="문제 번호")
